@@ -1,5 +1,6 @@
-
 import os
+os.environ["HOME"] = "/tmp"
+os.makedirs("/tmp/.streamlit", exist_ok=True)
 import streamlit as st
 from langchain_groq import ChatGroq
 from langchain_community.utilities import ArxivAPIWrapper,WikipediaAPIWrapper
@@ -9,9 +10,7 @@ from langchain.callbacks import StreamlitCallbackHandler
 import os
 from dotenv import load_dotenv
 load_dotenv()
-import os
 
-os.environ["HOME"] = "/tmp"
 ## Arxiv and wikipedia Tools
 arxiv_wrapper=ArxivAPIWrapper(top_k_results=1, doc_content_chars_max=300)
 arxiv=ArxivQueryRun(api_wrapper=arxiv_wrapper)
@@ -55,3 +54,4 @@ if prompt:=st.chat_input(placeholder="who founded isro?"):
         st.session_state.messages.append({'role':'assistant',"content":response})
 
         st.write(response)
+
