@@ -8,10 +8,10 @@ from langchain.agents import initialize_agent,AgentType
 from langchain.callbacks import StreamlitCallbackHandler
 import os
 from dotenv import load_dotenv
-
 load_dotenv()
+import os
 
-
+os.environ["HOME"] = "/tmp"
 ## Arxiv and wikipedia Tools
 arxiv_wrapper=ArxivAPIWrapper(top_k_results=1, doc_content_chars_max=300)
 arxiv=ArxivQueryRun(api_wrapper=arxiv_wrapper)
@@ -53,4 +53,5 @@ if prompt:=st.chat_input(placeholder="who founded isro?"):
         st_cb=StreamlitCallbackHandler(st.container(),expand_new_thoughts=False)
         response=search_agent.run(st.session_state.messages,callbacks=[st_cb])
         st.session_state.messages.append({'role':'assistant',"content":response})
+
         st.write(response)
